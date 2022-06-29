@@ -6,6 +6,8 @@ import { AiFillMinusSquare, AiFillPlusSquare } from 'react-icons/ai';
 import axios from 'axios';
 import Loader from './Loader';
 
+const BASE_URL = process.env.REACT_APP_API_URL;
+
 const Carts = ({ carts, addToCart, deleteFromCart, setShowCart, onSubmit }) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -63,10 +65,7 @@ const Carts = ({ carts, addToCart, deleteFromCart, setShowCart, onSubmit }) => {
         address,
         totalSumOfOrder,
       };
-      const { data } = await axios.post(
-        'http://localhost:5555/api/contacts',
-        fields,
-      );
+      const { data } = await axios.post(`${BASE_URL}/api/contacts`, fields);
       onSubmit({ data });
 
       toast.success('Your order has been added successfully');
