@@ -6,7 +6,7 @@ const Loader = () => {
     <div className="flex items-center justify-center fixed z-999">
       <Watch
         ariaLabel="loading-indicator"
-        className="bg-red-700"
+        className="text-red-700"
         height={100}
         width={100}
       />

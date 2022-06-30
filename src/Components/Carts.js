@@ -65,6 +65,7 @@ const Carts = ({ carts, addToCart, deleteFromCart, setShowCart, onSubmit }) => {
         address,
         totalSumOfOrder,
       };
+
       const { data } = await axios.post(`${BASE_URL}/api/contacts`, fields);
       onSubmit({ data });
 
@@ -107,7 +108,7 @@ const Carts = ({ carts, addToCart, deleteFromCart, setShowCart, onSubmit }) => {
         <div className="flex flex-col items-center px-2 py-4">
           {carts.map(cart => (
             <div
-              key={cart.id}
+              key={cart._id}
               className="text-center border-b-[3px] w-full mb-2 flex flex-col items-center"
             >
               <img
@@ -125,7 +126,7 @@ const Carts = ({ carts, addToCart, deleteFromCart, setShowCart, onSubmit }) => {
                 {cart.name}
               </h3>
               <div className="flex items-center my-2">
-                <button type="button" onClick={() => deleteFromCart(cart.id)}>
+                <button type="button" onClick={() => deleteFromCart(cart._id)}>
                   <AiFillMinusSquare className="text-red-700 text-[35px]" />
                 </button>
                 <p className="text-red-600 mx-2 font-mono text-[25px]">
@@ -222,7 +223,7 @@ Carts.propTypes = {
   carts: PropTypes.arrayOf(
     PropTypes.shape({
       amount: PropTypes.number,
-      id: PropTypes.number.isRequired,
+      _id: PropTypes.string,
       img: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       price: PropTypes.number,

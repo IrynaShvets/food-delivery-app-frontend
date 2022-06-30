@@ -3,13 +3,16 @@ import PropTypes from 'prop-types';
 
 const Product = ({ product, addToCart }) => {
   return (
-    <div className="flex-1 flex flex-col self-stretch items-center border-double border-4 border-pink-700 min-w-[300px] px-2 mb-2 ml-12 rounded-lg  transition ease-in-out delay-250 hover:-translate-y-1 hover:scale-105 duration-300 cursor-zoom-in">
+    <div
+      key={product._id}
+      className="flex-1 flex flex-col self-stretch items-center border-double border-4 border-pink-700 min-w-[300px] px-2 mb-2 ml-12 rounded-lg  transition ease-in-out delay-250 hover:-translate-y-1 hover:scale-105 duration-300 cursor-zoom-in"
+    >
       <img
         className=""
         src={product.img}
         alt={product.name}
-        width={300}
-        height={280}
+        width={400}
+        height={380}
       />
       <h4 className="text-red-900 font-bold font-mono">{product.shop}</h4>
       <h3 className="text-red-900 font-bold font-mono text-[20px]">
@@ -33,7 +36,7 @@ export default Product;
 
 Product.propTypes = {
   product: PropTypes.shape({
-    id: PropTypes.number.isRequired,
+    _id: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     shop: PropTypes.string.isRequired,
     img: PropTypes.string.isRequired,

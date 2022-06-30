@@ -8,7 +8,6 @@ import Carts from './Components/Carts';
 import Filter from './Components/Filter';
 import Loader from './Components/Loader';
 import axios from './axios';
-import { dataProducts } from './products';
 
 const useLocalStorage = (key, defaultValue) => {
   const [state, setState] = useState(() => {
@@ -60,8 +59,11 @@ export default function App() {
       setLoading(true);
       try {
         setLoading(true);
-        setProducts(dataProducts);
-        setFilter(dataProducts);
+        const { data } = await axios.get('/api/products');
+        const result = data.data;
+        const resultProducts = result.result;
+        setProducts(resultProducts);
+        setFilter(resultProducts);
         setLoading(false);
       } catch (error) {
         console.log(error);
@@ -74,21 +76,23 @@ export default function App() {
 
   const addToCart = product => {
     setCarts(prev => {
-      const findProduct = prev.find(item => item.id === product.id);
+      const findProduct = prev.find(item => item._id === product._id);
 
       if (findProduct) {
         return prev.map(item =>
-          item.id === product.id ? { ...item, amount: item.amount + 1 } : item,
+          item._id === product._id
+            ? { ...item, amount: item.amount + 1 }
+            : item,
         );
       }
       return [...prev, { ...product, amount: 1 }];
     });
   };
 
-  const deleteFromCart = id => {
+  const deleteFromCart = _id => {
     setCarts(prev => {
       return prev.reduce((previousValue, currentValue) => {
-        if (currentValue.id === id) {
+        if (currentValue._id === _id) {
           if (currentValue.amount === 1) return previousValue;
 
           return [
@@ -110,9 +114,9 @@ export default function App() {
       <h1 className="font-mono text-2xl italic font-bold text-center text-red-600/50 mt-4">
         You can order delicious food from us. Hurry up!
       </h1>
-
-      <div className=" flex flex-column my-1 container md:mx-auto mx-1 space-x-8">
-        <div className="inset-y-0 left-0 w-10 mx-1  my-4 ">
+      {/*  */}
+      <div className=" flex flex-column my-1 container md:mx-auto mx-1 space-x-14">
+        <div className="inset-y-0 left-0 w-10 my-4 mx-1">
           <Filter
             products={products}
             setFilter={setFilter}
@@ -124,7 +128,7 @@ export default function App() {
           <div className="flex flex-wrap container md:mx-auto mx-2 mt-4">
             {filter.map(product => (
               <Product
-                key={product.id}
+                key={product._id}
                 product={product}
                 addToCart={addToCart}
               />

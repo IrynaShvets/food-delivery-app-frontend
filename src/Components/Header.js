@@ -38,7 +38,7 @@ Header.propTypes = {
   carts: PropTypes.arrayOf(
     PropTypes.shape({
       amount: PropTypes.number,
-      id: PropTypes.number.isRequired,
+      _id: PropTypes.string.isRequired,
       img: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired,
       price: PropTypes.number,
